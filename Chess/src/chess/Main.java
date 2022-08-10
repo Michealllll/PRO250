@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Ashish Kedia and Adarsh Mohata
@@ -41,7 +44,7 @@ public class Main extends JFrame implements MouseListener
 	private static Queen wq,bq;
 	private static King wk,bk;
 	private Cell c,previous;
-	private int chance=0;
+	public static int chance=0;
 	private Cell boardState[][];
 	private ArrayList<Cell> destinationlist = new ArrayList<Cell>();
 	private Player White=null,Black=null;
@@ -69,7 +72,7 @@ public class Main extends JFrame implements MouseListener
 	private String[] WNames={},BNames={};
 	private JSlider timeSlider;
 	private BufferedImage image;
-	private Button start,wselect,bselect,WNewPlayer,BNewPlayer;
+	public Button start,gamemode,wselect,bselect,WNewPlayer,BNewPlayer;
 	public static int timeRemaining=60;
 	public static void main(String[] args){
 	
@@ -147,9 +150,9 @@ public class Main extends JFrame implements MouseListener
 	    WNames=Wnames.toArray(WNames);	
 		BNames=Bnames.toArray(BNames);
 		
-		Cell cell;
+		//Cell cell;
 		board.setBorder(BorderFactory.createLoweredBevelBorder());
-		pieces.Piece P;
+		//pieces.Piece P;
 		content=getContentPane();
 		setSize(Width,Height);
 		setTitle("Chess");
@@ -203,58 +206,74 @@ public class Main extends JFrame implements MouseListener
 		controlPanel.add(WhitePlayer);
 		controlPanel.add(BlackPlayer);
 		
-		
-		//Defining all the Cells
-		boardState=new Cell[8][8];
-		for(int i=0;i<8;i++)
-			for(int j=0;j<8;j++)
-			{	
-				P=null;
-				if(i==0&&j==0)
-					P=br01;
-				else if(i==0&&j==7)
-					P=br02;
-				else if(i==7&&j==0)
-					P=wr01;
-				else if(i==7&&j==7)
-					P=wr02;
-				else if(i==0&&j==1)
-					P=bk01;
-				else if (i==0&&j==6)
-					P=bk02;
-				else if(i==7&&j==1)
-					P=wk01;
-				else if (i==7&&j==6)
-					P=wk02;
-				else if(i==0&&j==2)
-					P=bb01;
-				else if (i==0&&j==5)
-					P=bb02;
-				else if(i==7&&j==2)
-					P=wb01;
-				else if(i==7&&j==5)
-					P=wb02;
-				else if(i==0&&j==3)
-					P=bk;
-				else if(i==0&&j==4)
-					P=bq;
-				else if(i==7&&j==3)
-					P=wk;
-				else if(i==7&&j==4)
-					P=wq;
-				else if(i==1)
-				P=bp[j];
-				else if(i==6)
-					P=wp[j];
-				cell=new Cell(i,j,P);
-				cell.addMouseListener(this);
-				board.add(cell);
-				boardState[i][j]=cell;
-			}
+		//Defining the board state with randomized chess pieces
+		//All pieces must be EQUAL on both sides - i.e 0,1 = white queen | 0,7 = black queen
+		//Equivilant pieces must be directly across from each other
+
+		// boardState=new Cell[8][8];
+		// for(int i=0;i<8;i++)
+		// 	for(int j=0;j<8;j++)
+		// 	{	
+		// 		P=null;
+		// 		if(i==0&&j==0) //top left black rook
+					
+		// 		// if 0,0 is rook, enable the possibility of king being placed from now on
+		// 			P=br01;
+		// 		else if(i==0&&j==7) // top right black rook
+		// 		// if 0,7 is rook, disable the possibility of king being placed from now on
+		// 			P=br02;
+		// 		else if(i==7&&j==0) // left white rook
+		// 		// if 7,0 is rook, enable the possibility of king being placed from now on
+		// 			P=wr01;
+		// 		else if(i==7&&j==7) // right white rook
+		// 		// if 7,7 is rook, disable the possibility of king being placed from now on
+		// 			P=wr02;
+		// 		else if(i==0&&j==1) // left black knight
+		// 			P=bk01;
+		// 		else if (i==0&&j==6) // right black knight
+		// 			P=bk02;
+		// 		else if(i==7&&j==1) // left white knight
+		// 			P=wk01;
+		// 		else if (i==7&&j==6) // right white knight
+		// 			P=wk02;
+		// 		else if(i==0&&j==2) // right black bishop
+		// 		// if 0,2 is bishop, require the next bishop to be placed on an uneven number spot.
+		// 			P=bb01;
+		// 		else if (i==0&&j==5) // left black bishop
+		// 		// if the first bishop is placed on even # square, require the next bishop to be placed on an uneven numbered spot.
+		// 			P=bb02;
+		// 		else if(i==7&&j==2) // right white bishop ^ follow same guidlines as black bishops
+		// 			P=wb01;
+		// 		else if(i==7&&j==5) // left white bishop
+		// 			P=wb02;
+		// 		else if(i==0&&j==3) // black king
+		// 		// require the king to be placed AFTER the first rook, and before the second
+		// 			P=bk;
+		// 		else if(i==0&&j==4) // black queen
+		// 			P=bq;
+		// 		else if(i==7&&j==3) // white king
+		// 		// require the king to be placed AFTER the first rook, and before the second
+		// 			P=wk;
+		// 		else if(i==7&&j==4) // white queen
+		// 			P=wq;
+		// 		else if(i==1) // black pawns
+		// 		P=bp[j];
+		// 		else if(i==6) // white pawns
+		// 			P=wp[j];
+		// 		cell=new Cell(i,j,P);
+		// 		cell.addMouseListener(this);
+		// 		board.add(cell);
+		// 		boardState[i][j]=cell;
+		// 	}
 		showPlayer=new JPanel(new FlowLayout());  
 		showPlayer.add(timeSlider);
 		JLabel setTime=new JLabel("Set Timer(in mins):"); 
-		start=new Button("Start");
+		gamemode=new Button("Start Chess960");
+		gamemode.setBackground(Color.black);
+		gamemode.setForeground(Color.white);
+		gamemode.addActionListener(new START960());
+		gamemode.setPreferredSize(new Dimension(120,40));
+		start=new Button("Start Chess");
 		start.setBackground(Color.black);
 		start.setForeground(Color.white);
 	    start.addActionListener(new START());
@@ -267,6 +286,7 @@ public class Main extends JFrame implements MouseListener
 	      time.add(setTime);
 	      time.add(showPlayer);
 	      displayTime.add(start);
+		  displayTime.add(gamemode);
 	      time.add(displayTime);
 	      controlPanel.add(time);
 		board.setMinimumSize(new Dimension(800,700));
@@ -368,10 +388,11 @@ public class Main extends JFrame implements MouseListener
 			((King)(newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
 		}
 		newboardstate[fromcell.x][fromcell.y].removePiece();
-		if (((King)(newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece())).isindanger(newboardstate)==true)
-			return true;
-		else
-			return false;
+		return false;
+		// if (((King)(newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece())).isindanger(newboardstate)==true)
+		// 	return true;
+		// else
+		// 	return false;
     }
     
     //A function to eliminate the possible moves that will put the King in danger
@@ -631,14 +652,14 @@ public class Main extends JFrame implements MouseListener
 	}
 	
 	
-	class START implements ActionListener
+	class START implements ActionListener // Activated Upon Button Click
 	{
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		startChess();
 		if(White==null||Black==null)
 			{JOptionPane.showMessageDialog(controlPanel, "Fill in the details");
 			return;}
@@ -662,12 +683,206 @@ public class Main extends JFrame implements MouseListener
 		CHNC.setForeground(Color.blue);
 		showPlayer.add(CHNC);
 		displayTime.remove(start);
+		displayTime.remove(gamemode);
 		displayTime.add(label);
 		timer=new Time(label);
 		timer.start();
 	}
 	}
 	
+	class START960 implements ActionListener // Activated Upon Button Click
+	{
+
+		@SuppressWarnings("deprecation")
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		startChess960();
+		if(White==null||Black==null)
+			{JOptionPane.showMessageDialog(controlPanel, "Fill in the details");
+			return;}
+		White.updateGamesPlayed();
+		White.Update_Player();
+		Black.updateGamesPlayed();
+		Black.Update_Player();
+		WNewPlayer.disable();
+		BNewPlayer.disable();
+		wselect.disable();
+		bselect.disable();
+		split.remove(temp);
+		split.add(board);
+		showPlayer.remove(timeSlider);
+		mov=new JLabel("Move:");
+		mov.setFont(new Font("Comic Sans MS",Font.PLAIN,20));
+		mov.setForeground(Color.red);
+		showPlayer.add(mov);
+		CHNC=new JLabel(move);
+		CHNC.setFont(new Font("Comic Sans MS",Font.BOLD,20));
+		CHNC.setForeground(Color.blue);
+		showPlayer.add(CHNC);
+		displayTime.remove(start);
+		displayTime.remove(gamemode);
+		displayTime.add(label);
+		timer=new Time(label);
+		timer.start();
+	}
+	}
+
+	//variables for determining 1st or 2nd piece placement
+	public int rCount = 0;
+	public int bCount = 0;
+	public int kCount = 0;
+	
+	public void startChess960(){ // chess960
+
+		piecesArr = generateFirstRow();
+		Cell cell;
+		pieces.Piece P;
+		boardState=new Cell[8][8];
+		for(int i=0;i<8;i++)
+			for(int j=0;j<8;j++)
+			{	
+				P=null;
+					if(i==0 && piecesArr.get(j) == 'R'){
+						P = br01;
+						rCount++;
+					}
+					if (i==0 && piecesArr.get(j) == 'R' && rCount == 2){
+						P = br02;
+					}
+					if (i==0 && piecesArr.get(j) == 'N'){
+						P = bk01;
+						kCount++;
+					}
+					if (i==0 && piecesArr.get(j) == 'N' && kCount == 2){
+						P = bk02;
+					}
+					if (i==0 && piecesArr.get(j) == 'B'){
+						P = bb01;
+						bCount++;
+					}
+					if (i==0 && piecesArr.get(j) == 'B' && bCount == 2){
+						P = bb02;
+					}
+					if (i==0 && piecesArr.get(j) == 'Q'){
+						P = bq;
+					}
+					if (i==0 && piecesArr.get(j) == 'K'){
+						P = bk;
+					}
+					if(i==1){ // black pawns
+						P=bp[j];
+					}
+
+					if(i==7 && piecesArr.get(j) == 'R'){
+						P = wr01;
+						rCount++;
+					}
+					if (i==7 && piecesArr.get(j) == 'R' && rCount == 2){
+						P = wr02;
+					}
+					if (i==7 && piecesArr.get(j) == 'N'){
+						P = wk01;
+						kCount++;
+					}
+					if (i==7 && piecesArr.get(j) == 'N' && kCount == 2){
+						P = wk02;
+					}
+					if (i==7 && piecesArr.get(j) == 'B'){
+						P = wb01;
+						bCount++;
+					}
+					if (i==7 && piecesArr.get(j) == 'B' && bCount == 2){
+						P = wb02;
+					}
+					if (i==7 && piecesArr.get(j) == 'Q'){
+						P = wq;
+					}
+					if (i==7 && piecesArr.get(j) == 'K'){
+						P = wk;
+					}
+					if(i==6){ // white pawns
+						P=wp[j];
+					}
+				cell=new Cell(i,j,P);
+				cell.addMouseListener(this);
+				board.add(cell);
+				boardState[i][j]=cell;
+			}
+
+
+	}
+
+	private static List<Character> piecesArr = Arrays.asList('R','B','N','Q','K','N','B','R'); // implement default 1st row
+ 
+	public static List<Character> generateFirstRow(){
+		do{
+			Collections.shuffle(piecesArr); // randomize 1st row order
+		}while(!check(piecesArr.toString().replaceAll("[^\\p{Upper}]", ""))); //List.toString adds junk, this removes it
+ 
+		return piecesArr;
+	}
+ 
+	private static boolean check(String piecesString){ // constraints for generating 1st row
+		if(!piecesString.matches(".*R.*K.*R.*")) return false;			//king between rooks
+		if(!piecesString.matches(".*B(..|....|......|)B.*")) return false;	//all possible ways bishops can be placed
+		return true;
+	}
+
+	public void startChess(){ // normal chess
+
+		Cell cell;
+		pieces.Piece P;
+		boardState=new Cell[8][8];
+		for(int i=0;i<8;i++)
+			for(int j=0;j<8;j++)
+			{	
+				P=null;
+				if(i==0&&j==0) //top left black rook
+					P=br01;
+				else if(i==0&&j==7) // top right black rook
+					P=br02;
+				else if(i==7&&j==0) // left white rook
+					P=wr01;
+				else if(i==7&&j==7) // right white rook
+					P=wr02;
+				else if(i==0&&j==1) // left black knight
+					P=bk01;
+				else if (i==0&&j==6) // right black knight
+					P=bk02;
+				else if(i==7&&j==1) // left white knight
+					P=wk01;
+				else if (i==7&&j==6) // right white knight
+					P=wk02;
+				else if(i==0&&j==2) // right black bishop
+					P=bb01;
+				else if (i==0&&j==5) // left black bishop
+					P=bb02;
+				else if(i==7&&j==2) // right white bishop 
+					P=wb01;
+				else if(i==7&&j==5) // left white bishop
+					P=wb02;
+				else if(i==0&&j==3) // black king
+					P=bk;
+				else if(i==0&&j==4) // black queen
+					P=bq;
+				else if(i==7&&j==3) // white king
+					P=wk;
+				else if(i==7&&j==4) // white queen
+					P=wq;
+				else if(i==1) // black pawns
+				P=bp[j];
+				else if(i==6) // white pawns
+					P=wp[j];
+				cell=new Cell(i,j,P);
+				cell.addMouseListener(this);
+				board.add(cell);
+				boardState[i][j]=cell;
+			}
+
+
+	}
+
 	class TimeChange implements ChangeListener
 	{
 		@Override
