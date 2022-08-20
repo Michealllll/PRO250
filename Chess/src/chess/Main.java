@@ -72,7 +72,8 @@ public class Main extends JFrame implements MouseListener
 	private Button start,wselect,bselect,WNewPlayer,BNewPlayer;
 	public static int timeRemaining=60;
 	public static void main(String[] args){
-	
+		changeLookAndFeelToSystemDefault();
+
 	//variable initialization
 	wr01=new Rook("WR01","White_Rook.png",0);
 	wr02=new Rook("WR02","White_Rook.png",0);
@@ -103,7 +104,18 @@ public class Main extends JFrame implements MouseListener
 	Mainboard.setVisible(true);	
 	Mainboard.setResizable(false);
 	}
-	
+
+	private static void changeLookAndFeelToSystemDefault() {
+		try {
+			UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException |
+			   IllegalAccessException e) {
+			System.err.println("Couldn't change look and feel");
+		}
+	}
+
 	//Constructor
 	private Main()
     {
@@ -358,16 +370,16 @@ public class Main extends JFrame implements MouseListener
     		for(int j=0;j<8;j++)
     		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace(); System.out.println("There is a problem with cloning !!"); }}
     	
-    	if(newboardstate[tocell.x][tocell.y].getpiece()!=null)
-			newboardstate[tocell.x][tocell.y].removePiece();
+    	if(newboardstate[tocell.getX()][tocell.getY()].getpiece()!=null)
+			newboardstate[tocell.getX()][tocell.getY()].removePiece();
     	
-		newboardstate[tocell.x][tocell.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
-		if(newboardstate[tocell.x][tocell.y].getpiece() instanceof King)
+		newboardstate[tocell.getX()][tocell.getY()].setPiece(newboardstate[fromcell.getX()][fromcell.getY()].getpiece());
+		if(newboardstate[tocell.getX()][tocell.getY()].getpiece() instanceof King)
 		{
-			((King)(newboardstate[tocell.x][tocell.y].getpiece())).setx(tocell.x);
-			((King)(newboardstate[tocell.x][tocell.y].getpiece())).sety(tocell.y);
+			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).setx(tocell.getX());
+			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).sety(tocell.getY());
 		}
-		newboardstate[fromcell.x][fromcell.y].removePiece();
+		newboardstate[fromcell.getX()][fromcell.getY()].removePiece();
 		if (((King)(newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece())).isindanger(newboardstate)==true)
 			return true;
 		else
@@ -388,19 +400,19 @@ public class Main extends JFrame implements MouseListener
         		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
     		
     		Cell tempc = it.next();
-    		if(newboardstate[tempc.x][tempc.y].getpiece()!=null)
-    			newboardstate[tempc.x][tempc.y].removePiece();
-    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+    		if(newboardstate[tempc.getX()][tempc.getY()].getpiece()!=null)
+    			newboardstate[tempc.getX()][tempc.getY()].removePiece();
+    		newboardstate[tempc.getX()][tempc.getY()].setPiece(newboardstate[fromcell.getX()][fromcell.getY()].getpiece());
     		x=getKing(chance).getx();
     		y=getKing(chance).gety();
-    		if(newboardstate[fromcell.x][fromcell.y].getpiece() instanceof King)
+    		if(newboardstate[fromcell.getX()][fromcell.getY()].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-    			x=tempc.x;
-    			y=tempc.y;
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setx(tempc.getX());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).sety(tempc.getY());
+    			x=tempc.getX();
+    			y=tempc.getY();
     		}
-    		newboardstate[fromcell.x][fromcell.y].removePiece();
+    		newboardstate[fromcell.getX()][fromcell.getY()].removePiece();
     		if ((((King)(newboardstate[x][y].getpiece())).isindanger(newboardstate)==false))
     			newlist.add(tempc);
     	}
@@ -420,19 +432,19 @@ public class Main extends JFrame implements MouseListener
         		for(int j=0;j<8;j++)
         		{	try { newboardstate[i][j] = new Cell(boardState[i][j]);} catch (CloneNotSupportedException e){e.printStackTrace();}}
     		Cell tempc = it.next();
-    		if(newboardstate[tempc.x][tempc.y].getpiece()!=null)
-    			newboardstate[tempc.x][tempc.y].removePiece();
-    		newboardstate[tempc.x][tempc.y].setPiece(newboardstate[fromcell.x][fromcell.y].getpiece());
+    		if(newboardstate[tempc.getX()][tempc.getY()].getpiece()!=null)
+    			newboardstate[tempc.getX()][tempc.getY()].removePiece();
+    		newboardstate[tempc.getX()][tempc.getY()].setPiece(newboardstate[fromcell.getX()][fromcell.getY()].getpiece());
     		x=getKing(color).getx();
     		y=getKing(color).gety();
-    		if(newboardstate[tempc.x][tempc.y].getpiece() instanceof King)
+    		if(newboardstate[tempc.getX()][tempc.getY()].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).setx(tempc.x);
-    			((King)(newboardstate[tempc.x][tempc.y].getpiece())).sety(tempc.y);
-    			x=tempc.x;
-    			y=tempc.y;
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setx(tempc.getX());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).sety(tempc.getY());
+    			x=tempc.getX();
+    			y=tempc.getY();
     		}
-    		newboardstate[fromcell.x][fromcell.y].removePiece();
+    		newboardstate[fromcell.getX()][fromcell.getY()].removePiece();
     		if ((((King)(newboardstate[x][y].getpiece())).isindanger(newboardstate)==false))
     			newlist.add(tempc);
     	}
@@ -520,7 +532,7 @@ public class Main extends JFrame implements MouseListener
 				c.select();
 				previous=c;
 				destinationlist.clear();
-				destinationlist=c.getpiece().move(boardState, c.x, c.y);
+				destinationlist=c.getpiece().move(boardState, c.getX(), c.getY());
 				if(c.getpiece() instanceof King)
 					destinationlist=filterdestination(destinationlist,c);
 				else
@@ -535,7 +547,7 @@ public class Main extends JFrame implements MouseListener
 		}
 		else
 		{
-			if(c.x==previous.x && c.y==previous.y)
+			if(c.getX()==previous.getX() && c.getY()==previous.getY())
 			{
 				c.deselect();
 				cleandestinations(destinationlist);
@@ -567,8 +579,8 @@ public class Main extends JFrame implements MouseListener
 						boardState[getKing(chance).getx()][getKing(chance).gety()].removecheck();
 					if(c.getpiece() instanceof King)
 					{
-						((King)c.getpiece()).setx(c.x);
-						((King)c.getpiece()).sety(c.y);
+						((King)c.getpiece()).setx(c.getX());
+						((King)c.getpiece()).sety(c.getY());
 					}
 					changechance();
 					if(!end)
@@ -592,7 +604,7 @@ public class Main extends JFrame implements MouseListener
 				destinationlist.clear();
 				c.select();
 				previous=c;
-				destinationlist=c.getpiece().move(boardState, c.x, c.y);
+				destinationlist=c.getpiece().move(boardState, c.getX(), c.getY());
 				if(c.getpiece() instanceof King)
 					destinationlist=filterdestination(destinationlist,c);
 				else
@@ -607,8 +619,8 @@ public class Main extends JFrame implements MouseListener
 		}
 		if(c.getpiece()!=null && c.getpiece() instanceof King)
 		{
-			((King)c.getpiece()).setx(c.x);
-			((King)c.getpiece()).sety(c.y);
+			((King)c.getpiece()).setx(c.getX());
+			((King)c.getpiece()).sety(c.getY());
 		}
 	}
     
