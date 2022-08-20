@@ -17,7 +17,7 @@ public class Cell extends JPanel implements Cloneable{
 	private boolean ispossibledestination;
 	private JLabel content;
 	private Piece piece;
-	int x,y;                             //is public because this is to be accessed by all the other class
+	private int x,y;                             //is public because this is to be accessed by all the other class
 	private boolean isSelected=false;
 	private boolean ischeck=false;
 	
@@ -138,5 +138,23 @@ public class Cell extends JPanel implements Cloneable{
 	public boolean ischeck()    //Function to check if the current cell is in check
 	{
 		return ischeck;
+	}
+
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }
