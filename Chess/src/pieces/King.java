@@ -11,19 +11,19 @@ public class King extends Piece{
 	//King Constructor
 	public King(String i,String p,int c,int x,int y)
 	{
-		setx(x);
-		sety(y);
+		setX(x);
+		setY(y);
 		setId(i);
 		setPath(p);
 		setColor(c);
 	}
 	
 	//general value access functions
-	public void setx(int x)
+	public void setX(int x)
 	{
 		this.x=x;
 	}
-	public void sety(int y)
+	public void setY(int y)
 	{
 		this.y=y;
 	}

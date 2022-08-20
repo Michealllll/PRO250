@@ -376,8 +376,8 @@ public class Main extends JFrame implements MouseListener
 		newboardstate[tocell.getX()][tocell.getY()].setPiece(newboardstate[fromcell.getX()][fromcell.getY()].getpiece());
 		if(newboardstate[tocell.getX()][tocell.getY()].getpiece() instanceof King)
 		{
-			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).setx(tocell.getX());
-			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).sety(tocell.getY());
+			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).setX(tocell.getX());
+			((King)(newboardstate[tocell.getX()][tocell.getY()].getpiece())).setY(tocell.getY());
 		}
 		newboardstate[fromcell.getX()][fromcell.getY()].removePiece();
 		if (((King)(newboardstate[getKing(chance).getx()][getKing(chance).gety()].getpiece())).isindanger(newboardstate)==true)
@@ -407,8 +407,8 @@ public class Main extends JFrame implements MouseListener
     		y=getKing(chance).gety();
     		if(newboardstate[fromcell.getX()][fromcell.getY()].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setx(tempc.getX());
-    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).sety(tempc.getY());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setX(tempc.getX());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setY(tempc.getY());
     			x=tempc.getX();
     			y=tempc.getY();
     		}
@@ -439,8 +439,8 @@ public class Main extends JFrame implements MouseListener
     		y=getKing(color).gety();
     		if(newboardstate[tempc.getX()][tempc.getY()].getpiece() instanceof King)
     		{
-    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setx(tempc.getX());
-    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).sety(tempc.getY());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setX(tempc.getX());
+    			((King)(newboardstate[tempc.getX()][tempc.getY()].getpiece())).setY(tempc.getY());
     			x=tempc.getX();
     			y=tempc.getY();
     		}
@@ -579,8 +579,8 @@ public class Main extends JFrame implements MouseListener
 						boardState[getKing(chance).getx()][getKing(chance).gety()].removecheck();
 					if(c.getpiece() instanceof King)
 					{
-						((King)c.getpiece()).setx(c.getX());
-						((King)c.getpiece()).sety(c.getY());
+						((King)c.getpiece()).setX(c.getX());
+						((King)c.getpiece()).setY(c.getY());
 					}
 					changechance();
 					if(!end)
@@ -619,8 +619,8 @@ public class Main extends JFrame implements MouseListener
 		}
 		if(c.getpiece()!=null && c.getpiece() instanceof King)
 		{
-			((King)c.getpiece()).setx(c.getX());
-			((King)c.getpiece()).sety(c.getY());
+			((King)c.getpiece()).setX(c.getX());
+			((King)c.getpiece()).setY(c.getY());
 		}
 	}
     
